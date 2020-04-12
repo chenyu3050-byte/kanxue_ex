@@ -1,4 +1,6 @@
-from  https://bbs.pediy.com/thread-248682.htm
+#from  https://bbs.pediy.com/thread-248682.htm
+#you can get the ELF from the url which is at line 1
+
 from pwn import*
 
 context_level='debug'
